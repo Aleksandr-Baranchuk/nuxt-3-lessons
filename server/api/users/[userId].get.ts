@@ -3,11 +3,11 @@ import { defineEventHandler } from "h3";
 
 const prisma = new PrismaClient();
 export default defineEventHandler(async (event) => {
-    const { userId } = event.context.params;
+    const params = event.context.params || {};
 
-    const user = await prisma.user.findFirst({
+    const user = await prisma.comments.findFirst({
         where: {
-            id: +userId
+            id: params.userId
         }
     });
     if (!user) {
